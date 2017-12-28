@@ -1,0 +1,122 @@
+@charset "utf-8";
+/* CSS Document */
+html, body, div, p, ul, li, dl, dt, dd, h1, h2, h3, h4, h5, h6, form,
+	input, select, button, textarea, iframe, table, th, td {
+	margin: 0;
+	padding: 0;
+}
+/*字体*/
+body {
+	font: 14px/21px '微软雅黑';
+	_font-family: '微软雅黑' !important;
+	text-align: left;
+	background: #fff;
+	color: #333;
+}
+/*包裹 IE8居中*/
+#wrap {
+	text-align: left;
+}
+/*ul*/
+.centerMain ul {
+	list-style: none;
+	line-height: 30px;
+}
+/*a*/
+a {
+	text-decoration: none;
+	outline: none;
+}
+/*img*/
+img {
+	border: 0 none;
+	max-width: 100%;
+}
+/*浮动*/
+.fl {
+	float: left;
+	display: inline;
+}
+
+.fr {
+	float: right;
+	display: inline;
+}
+/*清除浮动*/
+.clear {
+	clear: both;
+}
+/*塌陷*/
+.clearfix {
+	zoom: 1;
+}
+
+.clearfix:before, .clearfix:after {
+	display: table;
+	line-height: 0;
+	content: "";
+}
+
+.clearfix:after {
+	clear: both;
+}
+
+.mt20 {
+	margin-top: 20px;
+}
+
+.top {
+	position: fixed;
+	left: 0;
+	top: 0;
+	height: 44px;
+	line-height: 44px;
+	width: 100%;
+	background: #fff;
+	color: #666;
+	font-size: 16px;
+	text-align: center;
+	z-index: 10000;
+}
+
+.tab {
+	width: 50%;
+	text-align: center;
+	border-bottom: 2px solid #eee;
+}
+
+.top .tab:first-child {
+	border-right: 1px solid #eee;
+}
+
+.centerMain {
+	width: 100%;
+	overflow: hidden;
+	background: #f5f5f5;
+	padding-top: 50px;
+}
+
+.tabActive {
+	border-bottom: 2px solid #09BB07;
+	color: #09BB07;
+	box-sizing: border-box;
+}
+
+.tab-container {
+	padding-top: 15px;
+	width: 100%;
+	overflow: hidden;
+	position: relative
+}
+
+.form1 {
+	margin-top: 10px;
+	width: 100%;
+	overflow: hidden;
+	font-size: 16px;
+}
+
+.form2 {
+	margin-top: 10px;
+	display: none;
+}

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ <beans xmlns="http://www.springframework.org/schema/beans"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.springframework.org/schema/beans
+         http://www.springframework.org/schema/beans/spring-beans.xsd">
+ 
+     <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+          <property name="locations">
+              <value>classpath:mina.properties</value>
+          </property>
+     </bean>
+     <!-- 定义数据处理Bean -->
+     <bean id="serverHandler" class="com.lfhao.xbox.server.MainHandler"/>
+     
+     <!-- executorFilter多线程处理 -->
+     <bean id="executorFilter" class="org.apache.mina.filter.executor.ExecutorFilter"/>
+ <!--     <bean id="executorFilter" class="org.apache.mina.filter.executor.ExecutorFilter">
+     	<constructor-arg index="0" value="${mina.server.initPoolSize}" />
+  		<constructor-arg index="1" value="${mina.server.maximumPoolSize}"/>
+     </bean>-->
+     <bean id="mdcInjectionFilter" class="org.apache.mina.filter.logging.MdcInjectionFilter">
+         <constructor-arg value="remoteAddress" />
+     </bean>
+     
+     <!-- 字符编 码过滤器 -->
+     <bean id="codecFilter" class="org.apache.mina.filter.codec.ProtocolCodecFilter">
+         <constructor-arg>
+         <!-- <bean class="org.apache.mina.filter.codec.textline.TextLineCodecFactory" />-->
+         <!-- 处理对象流时候用ObjectSerializationCodecFactory -->
+         <!-- <bean class="org.apache.mina.filter.codec.serialization.ObjectSerializationCodecFactory" /> -->
+             <bean class="com.lfhao.xbox.factory.HCoderFactory" />
+         </constructor-arg>
+     </bean>
+     
+     <!-- 日志过滤器 -->
+     <bean id="loggingFilter" class="org.apache.mina.filter.logging.LoggingFilter">
+     	<property name="messageReceivedLogLevel" ref="info"></property>
+    	<property name="exceptionCaughtLogLevel" ref="info"></property>
+     </bean>
+     
+     <!-- 枚举类型 依赖注入  需要先通过此类进行类型转换-->
+    <bean id="info" class="org.springframework.beans.factory.config.FieldRetrievingFactoryBean">    
+        <property name="staticField" value="org.apache.mina.filter.logging.LogLevel.INFO" />    
+    </bean>
+     
+     <!-- 过滤器链 -->
+     <bean id="filterChainBuilder" class="org.apache.mina.core.filterchain.DefaultIoFilterChainBuilder">
+         <property name="filters">
+             <map>
+                 <entry key="executor" value-ref="executorFilter" />
+                 <entry key="mdcInjectionFilter" value-ref="mdcInjectionFilter" />
+                 <entry key="codecFilter" value-ref="codecFilter" />
+                 <entry key="loggingFilter" value-ref="loggingFilter" />
+             </map>
+         </property>
+     </bean>
+     
+     <bean class="org.springframework.beans.factory.config.CustomEditorConfigurer">
+         <property name="customEditors">
+             <map>
+                <entry key="java.net.SocketAddress" 
+                	value="org.apache.mina.integration.beans.InetSocketAddressEditor"/>
+              </map>
+         </property>
+     </bean>
+     
+     <!-- session config 通过工厂方法注入 -->
+     <bean id="sessionConfig" factory-bean="ioAcceptor" factory-method="getSessionConfig" >
+			<!-- 配置session 空闲时间，单位 秒 -->
+         <property name="bothIdleTime" value="180"/>
+         <!-- 配置接收、发送缓冲区大小 -->
+         <property name="receiveBufferSize" value="1024"/>
+         <property name="sendBufferSize" value="1024"/>
+     </bean>
+     
+     <bean id="ioAcceptor" class="org.apache.mina.transport.socket.nio.NioSocketAcceptor" init-method="bind" destroy-method="unbind">
+         <!-- 默认启用的线程个数是CPU 的核数+1， -->
+ 		 <!--<constructor-arg index="0" value="10"></constructor-arg>-->
+         <property name="defaultLocalAddress" value="${mina.server.serverLocationAddress}" />
+         <property name="handler" ref="serverHandler" />
+         <property name="filterChainBuilder" ref="filterChainBuilder" />
+         <property name="reuseAddress" value="true" />
+         <!-- <property name="backlog" value="100"/> -->
+     </bean>
+</beans>

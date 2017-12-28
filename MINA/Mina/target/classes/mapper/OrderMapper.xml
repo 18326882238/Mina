@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"      
+ "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="com.lfhao.xbox.dao.OrderDao">
+
+	<resultMap type="com.lfhao.xbox.entity.OrderMessage" id="orderMap">
+		<result property="trackNum" column="fs_OrderID" />
+		<result property="recTel" column="fs_Phone" />
+		<result property="status" column="fi_Status" />
+		<result property="deliverTime" column="fs_DeliverTime" />
+		<result property="pickUpTime" column="fs_PickUpTime" />
+		<result property="boxId" column="fi_BoxID" />
+		<result property="pageStart" column="pageStart" />
+		<result property="pageSize" column="pageSize" />
+	</resultMap>
+	
+	<select id="listForOrderByOpenIdEX" parameterType="map" resultMap="orderMap">
+	select * from (select row_number() over(order by tmp.deliverTime desc) as row,*from (
+	select
+			fs_OrderID as trackNum,
+			fs_Phone as recTel,
+			fi_Status as status,
+			fs_DeliverTime as deliverTime,
+			fs_PickUpTime as pickUpTime
+		from
+			tb_Order
+		where
+			fs_DispatcherCardID = (select tb_tel from tb_webuser where tb_openid=#{openId})
+		and
+			fs_DeliverTime>CONVERT(varchar(100), dateadd(day,-30,GETDATE()), 112)
+	) tmp) temp where temp.row between #{pageStart} and #{pageSize}
+	
+	</select>
+	
+	<select id="listForOrderByOpenId" parameterType="String" resultMap="orderMap">
+		select
+			fs_OrderID as trackNum,
+			fs_Phone as recTel,
+			fi_Status as status,
+			fs_DeliverTime as deliverTime,
+			fs_PickUpTime as pickUpTime
+		from
+			tb_Order
+		where
+			fs_DispatcherCardID = (select tb_tel from tb_webuser where tb_openid=#{openId})
+		and
+			fs_DeliverTime>CONVERT(varchar(100), dateadd(day,-30,GETDATE()), 112)
+		order by fs_DeliverTime desc
+	</select>
+	
+	<select id="findDeliveredOrderMegByOpenID" parameterType="map" resultMap="orderMap">
+		select
+			fs_OrderID as trackNum,
+			fs_Phone as recTel,
+			fi_Status as status,
+			fi_BoxID as boxId,
+			fs_DeliverTime as deliverTime,
+			fs_PickUpTime as pickUpTime
+		from
+			tb_Order
+		where
+			fi_DeviceID = #{deviceId}
+		and
+			fs_DispatcherCardID = (select tb_tel from tb_webuser where tb_openid=#{openId})
+		and
+			fs_DeliverTime>CONVERT(varchar(100), dateadd(day,-30,GETDATE()), 112)
+		and
+			fi_status=#{status}
+		order by fs_DeliverTime desc
+	</select>
+	
+	<select id="findSimpleOrderMegByOpenID" parameterType="map" resultMap="orderMap">
+		select
+			fs_OrderID as trackNum,
+			fs_Phone as recTel,
+			fi_Status as status,
+			fi_BoxID as boxId,
+			fs_DeliverTime as deliverTime,
+			fs_PickUpTime as pickUpTime
+		from
+			tb_Order
+		where
+			fs_Phone=(select tb_tel from tb_webuser where tb_openid=#{openId})
+		and
+			fs_DeliverTime>CONVERT(varchar(100), dateadd(day,-30,GETDATE()), 112)
+		and
+			fi_status=#{status}
+		order by fs_DeliverTime desc
+	</select>
+
+	<select id="findOrderMegByOrder" parameterType="map"
+		resultType="com.lfhao.xbox.entity.OrderMessage">
+		select
+			a.fs_OrderId as trackNum,
+			b.fs_expresscompany as express,
+			b.fs_name as deliverName,
+			b.fs_phone as deliverTel,
+			a.fs_phone as recTel,
+			a.fs_delivertime as deliverTime,
+			a.fs_pickuptime as pickUpTime,
+			c.fs_name as address,
+			a.fi_BoxID as boxId,
+			a.fi_status as status,
+			a.fs_SmsCode as pickPwd
+		from
+			tb_Order a,tb_Card b,tb_Device c
+		where
+			a.fs_dispatcherCardID=b.fs_cardID
+		and
+			a.fi_DeviceID=c.fi_deviceID
+		and
+			a.fs_orderID=#{order}
+		and 
+			a.fi_boxID = #{fi_boxId}
+	</select>
+	
+	<insert id="saveOrderMessage" parameterType="com.lfhao.xbox.entity.OrderMessage">
+		insert into tb_Order(
+			fi_SerialID,
+			fs_OrderID,
+			fi_DeviceID,
+			fi_BoxID,
+			fs_DispatcherCardID,
+			fs_Phone,
+			fi_Status,
+			fs_DeliverTime,
+			fs_Content
+		)values(
+			#{serialId},
+			#{trackNum},
+			#{deviceId},
+			#{boxId},
+			#{deliverTel},
+			#{recTel},
+			1,
+			#{deliverTime},
+			#{content}
+		)
+	</insert>
+	
+</mapper>
+
+
+
+
+
+
+

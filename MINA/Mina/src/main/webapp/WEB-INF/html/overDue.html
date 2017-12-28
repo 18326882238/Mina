@@ -1,0 +1,93 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>智能信包柜</title>
+<meta name="description" content="">
+<meta name="keywords" content="">
+
+<link rel="stylesheet" type="text/css" href="css/main.css" />
+
+</head>
+<body>
+
+<div class="nav">快件取回</div>
+<div class="container" id="container">
+	<div class="loading-warp">
+		<div class="box">
+			<div>
+				<img src="img/loading.gif" />
+				<span class="text">下拉开始刷新</span>
+			</div>
+		</div>
+	</div>
+	<ul id="orderList" class="list">
+	<!--	<li>订单号：<i>123124312</i>
+			<span>投递时间</span>
+		</li>
+		<li>订单号：<i>123124312</i>
+			<span>投递时间</span>
+		</li>
+		<li>订单号：<i>123124312</i>
+			<span>投递时间</span>
+		</li>
+		<li>订单号：<i>123124312</i>
+			<span>投递时间</span>
+		</li>
+		<li>订单号：<i>123124312</i>
+			<span>投递时间</span>
+		</li>-->
+	</div>
+</div>
+
+<!--<div class="linkAdv">
+	<a href="index.html">Demo-1</a>
+	<a href="demo-2.html">Demo-2</a>
+	<a href="demo-3.html">Demo-3</a>
+</div>-->
+<div class="foot">
+© 2013 - <span><script>var d = new Date(); document.write(d.getFullYear());</script></span>
+利富豪科技 版权所有
+</div>
+</body>
+
+<script type="text/javascript" src="js/jquery-3.1.0.min.js"></script>
+<script type="text/javascript" src="js/touche.js"></script>
+<script type="text/javascript" src="js/p-pull-refresh.js"></script>
+<script type="text/javascript" src="js/overDue.js"></script>
+
+<script type="text/javascript">
+	
+	var $statu = $('.loading-warp .text');
+	
+	var pullRefresh = $('.container').pPullRefresh({
+		$el: $('.container'),
+		$loadingEl: $('.loading-warp'),
+		sendData: null,
+		url: 'doload.do?status='+1,
+		autoHide: true,
+		callbacks: {
+			pullStart: function(){
+				$statu.text('松开开始刷新');
+			},
+			start: function(){
+				$statu.text('数据刷新中···');
+			},
+			success: function(response){
+				$statu.text('数据刷新成功！');
+			},
+			end: function(){
+				$statu.text('下拉刷新结束');
+			},
+			error: function(){
+				$statu.text('找不到请求地址,数据刷新失败');
+			}
+		}
+	});
+
+	// pullRefresh.setDestroy(true);
+	
+</script>
+
+</html>

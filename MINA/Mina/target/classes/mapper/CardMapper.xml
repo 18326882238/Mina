@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"      
+ "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="com.lfhao.xbox.dao.CardDao">
+
+	<select id="findCardByOpenId" parameterType="String" 
+			resultType="com.lfhao.xbox.entity.Card">
+		select
+			fs_CardID as cardId,
+			fs_Pwd as pwd,
+			fi_GroupID as groupId,
+			fs_Name as name,
+			fs_Phone as phone,
+			fi_Status as status,
+			fi_UnitID as unitId,
+			fs_ExpressCompany as expressCompany
+		from
+			tb_Card
+		where 
+			fs_Phone=(select tb_tel from tb_webuser where tb_openid=#{openID})
+	</select>
+
+</mapper>
+
+
+
+
+
+
+

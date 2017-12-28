@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"      
+ "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="com.lfhao.xbox.dao.BoxDao">
+	
+	<resultMap type="com.lfhao.xbox.entity.Box" id="boxMap">
+		<result property="boxSum" column="boxSum" />
+		<result property="boxSize" column="fi_BoxSize" />
+	</resultMap>
+	
+	<select id="findHireBoxId" parameterType="map" resultType="com.lfhao.xbox.entity.Box">
+		select
+			fi_BoxID as boxId
+		from
+			tb_Box
+		where
+			fi_DeviceID = #{deviceId}
+		and
+			fi_OwnerID = #{ownerId}
+	</select>
+	
+	<select id="sumForBoxSize" parameterType="Integer" resultMap="boxMap">
+		select
+			fi_BoxSize as boxSize,
+			sum(fi_BoxStatus) as boxSum
+		from
+			tb_Box
+		where
+			fi_DeviceID = #{fi_DeviceID}
+		and
+			fi_BoxStatus = 1
+		group by fi_BoxSize
+	</select>
+	
+	<select id="findBoxByDeviceAndBoxSize" parameterType="map" resultType="java.lang.Integer">
+		select top 1
+			fi_BoxID as boxId
+		from
+			tb_Box
+		where
+			fi_DeviceID = #{deviceID}
+		and
+			fi_BoxSize = #{boxSize}
+		and 
+			fi_BoxStatus = 1
+		order by newid()
+	</select>
+	
+	
+	
+</mapper>
+
+
+
+
+
+
+

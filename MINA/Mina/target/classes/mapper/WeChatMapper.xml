@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"      
+ "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="com.lfhao.xbox.dao.WeChatDao">
+
+	<select id="getLockByOrderId" parameterType="map"
+		resultType="com.lfhao.xbox.entity.DataHelper">
+		select
+			fs_SmsCode as userId,
+			fi_boxId as boxId,
+			fi_DeviceID as deviceId
+		from
+			tb_Order
+		where
+			fs_OrderID=#{order}
+		and
+			fi_boxId = #{boxId}
+	</select>
+
+	<select id="findQRIDByDeviceID" parameterType="string"
+		resultType="string">
+		select
+		fs_QRtokenID
+		from
+		tb_Device
+		where
+		fi_DeviceID=#{deviceID}
+	</select>
+
+	<select id="findDeviceIDByQRID" parameterType="string"
+		resultType="string">
+		select
+		fi_DeviceID
+		from
+		tb_Device
+		where
+		fs_QRtokenID=#{QRID}
+	</select>
+
+	<select id="findDeviceIDByToken" parameterType="string"
+		resultType="string">
+		select
+		fi_DeviceID
+		from
+		tb_Device
+		where
+		fs_LoginToken=#{guid}
+	</select>
+
+	<select id="findTokenByDeviceID" parameterType="string"
+		resultType="string">
+		select
+		fs_LoginToken
+		from
+		tb_Device
+		where
+		fi_DeviceID=#{deviceID}
+	</select>
+
+	<select id="findBoxID" parameterType="map" resultType="java.lang.Integer">
+		select
+		distinct fi_BoxID
+		from
+		tb_Order
+		where
+		fi_DeviceID=#{deviceID}
+		and
+		fs_Phone=
+		(select tb_tel from tb_webuser where tb_openid=#{openId})
+		and
+		fi_Status=1
+	</select>
+
+	<select id="findMegByOpenID" parameterType="string"
+		resultType="com.lfhao.xbox.entity.LoginMessage">
+		select
+		fs_Phone as phone,
+		fs_Pwd as password,
+		fi_GroupID as groupID,
+		fi_ExpressCompanyID as expressID
+		from
+		tb_Card
+		where
+		fs_Phone=(select tb_tel from tb_webuser where tb_OpenID=#{openID})
+	</select>
+	
+	<select id="findOwnerMegByOpenID" parameterType="string"
+		resultType="com.lfhao.xbox.entity.LoginMessage">
+		select
+		fi_Phone as userPID,
+		fi_OwnerPwd as userPWD
+		from
+		tb_Owner
+		where
+		fi_Phone=(select tb_tel from tb_webuser where tb_OpenID=#{openID})
+	</select>
+</mapper>
+
+
+
+
+
+
+

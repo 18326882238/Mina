@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"      
+ "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="com.lfhao.xbox.dao.OwnerDao">
+	
+	<select id="listOwnerMessageByOpenId" parameterType="map"
+		resultType="com.lfhao.xbox.entity.DataHelper">
+		select
+			fi_OwnerID as ownerId,
+			fi_BuildingNum as buildingNum,
+			fi_UnitNum as unitNum,
+			fi_DoorNum as doorNum,
+			fi_Name as name
+		from
+			tb_Owner
+		where
+			fi_Phone in (
+				select
+					distinct(fs_Phone)
+				from
+					tb_Order
+				where
+					fi_DeviceID = #{deviceId}
+				and
+					fs_SmsCode = fs_Phone
+				and
+					fs_DispatcherCardID = (
+					select tb_tel from tb_webuser where tb_openid=#{openId})
+			)
+	</select>
+	
+	<select id="findOwnerIdByNumStr" parameterType="map" 
+		resultType="String">
+		select
+			fi_OwnerID as ownerId
+		from
+			tb_Owner
+		where
+			fi_BuildingNum = #{buildingNum}
+		and
+			fi_UnitNum = #{unitNum}
+		and
+			fi_DoorNum = #{doorNum}
+		and
+			fi_DeviceID = #{deviceId}
+	</select>
+	
+</mapper>
+
+
+
+
+
+

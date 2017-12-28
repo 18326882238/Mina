@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"      
+ "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="com.lfhao.xbox.dao.CustomerDao">
+
+	<select id="findCustomerByOpenID" parameterType="java.lang.String"
+		resultType="com.lfhao.xbox.entity.Customer">
+		select
+		tb_id as id,
+		tb_tel as tel,
+		tb_openid as openId,
+		tb_intertime as interTime
+		from
+		tb_webuser
+		where
+		tb_openid=#{openId}
+	</select>
+
+	<delete id="delCustomerByOpenID" parameterType="java.lang.String">
+		delete from
+		tb_webuser where tb_openid=#{openID}
+	</delete>
+
+	<insert id="saveTimeKeeper" parameterType="com.lfhao.xbox.entity.TimeKeeper">
+		insert into
+		tb_wxstop(c_id,c_openId,c_tel,c_outtime) values
+		(#{countId},
+		#{userOpenId},
+		#{userTel},
+		#{outTime})
+	</insert>
+
+	<select id="findCustomerByTel" parameterType="java.lang.String"
+		resultType="com.lfhao.xbox.entity.Customer">
+		select
+		tb_id as id,
+		tb_tel as tel,
+		tb_openid as openId,
+		tb_intertime as interTime
+		from
+		tb_webuser
+		where
+		tb_tel=#{tel}
+	</select>
+
+	<select id="getTimeKeeperByOpenID" parameterType="string"
+		resultType="com.lfhao.xbox.entity.TimeKeeper">
+		select
+		c_id as countId,
+		c_tel as userTel,
+		c_outtime as outTime
+		from
+		tb_wxstop
+		where
+		c_openId=#{openId}
+	</select>
+
+	<delete id="delCodeByTel" parameterType="java.lang.String">
+		delete from tb_webcode
+		where tb_tel=#{tel}
+	</delete>
+
+	<insert id="saveCode" parameterType="com.lfhao.xbox.entity.CheckCode">
+		insert into tb_webcode
+		values(
+		#{id},
+		#{code},
+		#{tel},
+		#{openId},
+		#{createTime},
+		#{type})
+	</insert>
+
+	<select id="findCodeByTel" parameterType="java.util.Map"
+		resultType="com.lfhao.xbox.entity.CheckCode">
+		select
+		tb_id as id,
+		tb_code as code,
+		tb_tel as tel,
+		tb_openid as openId,
+		tb_createtime as createTime
+		from
+		tb_webcode
+		where
+		tb_tel=#{tel}
+		and
+		tb_type=#{type}
+	</select>
+
+	<insert id="saveCustomer" parameterType="com.lfhao.xbox.entity.Customer">
+		insert into tb_webuser
+		values(
+		#{id},
+		#{tel},
+		#{openId},
+		#{interTime})
+	</insert>
+
+	<delete id="delTimeKeeperByOpenID" parameterType="string">
+		delete from
+		tb_wxstop where c_openId=#{openId}
+	</delete>
+
+	<select id="findGroups" resultType="com.lfhao.xbox.entity.DataHelper">
+		select fi_ID,fs_Name from
+		tb_Group
+	</select>
+
+	<select id="saveDeliver" parameterType="com.lfhao.xbox.entity.DataHelper">
+		insert into tb_CheckCard(
+		fs_CardID,
+		fs_Pwd,
+		fi_GroupID,
+		fs_Name,
+		fs_Phone,
+		fi_Status,
+		fi_UnitID,
+		fs_Identity,
+		fs_ExpressCompany,
+		fi_CheckStatus,
+		fs_FixedAddr,
+		fs_Addr,
+		fi_DeviceID)
+		values(
+		#{deliverTel },
+		#{deliverPwd },
+		#{groupID },
+		#{deliverName },
+		#{deliverTel },
+		2,
+		0,
+		#{id },
+		#{deliverCompany },
+		1,
+		#{location },
+		#{deliverAddr },
+		#{deviceID })
+	</select>
+
+	<select id="findCompanyIDByName" parameterType="string" resultType="java.lang.Integer">
+		select count(fi_ExpressCompanyID) from tb_ExpressCompany
+		where fs_ExpressCompanyName=#{deliverCompany}
+	</select>
+
+	<select id="findCustomerTel" parameterType="string" resultType="string">
+		select 
+			fs_CardID
+		from 
+			tb_Card 
+		where 
+			fs_Phone=(
+			select tb_tel from tb_webuser where tb_openid=#{openID})
+	</select>
+	
+	
+	
+</mapper>
+
+
+
+
+
+

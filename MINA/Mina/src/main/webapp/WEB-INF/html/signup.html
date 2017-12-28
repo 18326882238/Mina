@@ -1,0 +1,185 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>快递员注册</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport"
+	content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
+<link rel="stylesheet" href="css/register-wap.css" />
+<script type="text/javascript" src="js/jquery-3.1.0.min.js"></script>
+<link rel="stylesheet"
+	href="http://cache.amap.com/lbs/static/main1119.css" />
+<script type="text/javascript"
+	src="http://webapi.amap.com/maps?v=1.3&key=518d06c12c5a1b59d234fa63325ceef5&plugin=AMap.CitySearch"></script>
+<script type="text/javascript"
+	src="http://cache.amap.com/lbs/static/addToolbar.js"></script>
+</head>
+<body>
+	<nav>注册帐号</nav>
+	<form action="#" id="register_form" autocomplete="off" method="post">
+		<!-- 手机注册开始 -->
+		<div id="error_display"
+			style="text-align: center; color: red; display: none;">
+			<!--错误信息显示区域-->
+		</div>
+		<section class="phone-register">
+
+			<div class="register-item">
+				<div class="inputs ">
+					<label for="phone"><img src="img/user.png"></label> <input
+						type="text" class="form-control" value="点击输入真实姓名"
+						onfocus="if(value==&#39;点击输入真实姓名&#39;) {value=&#39;&#39;}"
+						onblur="if (value==&#39;&#39;) {value=&#39;点击输入真实姓名&#39;}"
+						data-role="none">
+				</div>
+				<div class="tip">请输入真实姓名</div>
+			</div>
+			<div class="register-item">
+				<div class="inputs ">
+					<label for="phone"><img src="img/phone.png"></label> <input
+						type="text" class="form-control" value="点击输入注册手机号"
+						onfocus="if(value==&#39;点击输入注册手机号&#39;) {value=&#39;&#39;}"
+						onblur="if (value==&#39;&#39;) {value=&#39;点击输入注册手机号&#39;}"
+						data-role="none">
+				</div>
+				<div class="tip">请输入手机号码</div>
+			</div>
+			<div class="register-item">
+				<div class="inputs ">
+					<label for="phone"><img src="img/lock.png"></label> <input
+						type="text" class="form-control" value="点击输入登录密码"
+						onfocus="if(value==&#39;点击输入登录密码&#39;) {value=&#39;&#39;}"
+						onblur="if (value==&#39;&#39;) {value=&#39;点击输入登录密码&#39;}"
+						data-role="none">
+				</div>
+				<div class="tip">请输入登录密码</div>
+			</div>
+			<div class="register-item">
+				<div class="inputs ">
+					<label for="phone"><img src="img/lock.png"></label> <input
+						type="text" class="form-control" value="点击再次输入密码"
+						onfocus="if(value==&#39;点击再次输入密码&#39;) {value=&#39;&#39;}"
+						onblur="if (value==&#39;&#39;) {value=&#39;点击再次输入密码&#39;}"
+						data-role="none">
+				</div>
+				<div class="tip">请再次输入密码</div>
+			</div>
+			<div class="register-item">
+				<div class="inputs ">
+					<label for="phone"><img src="img/id.png"></label> <input
+						type="text" class="form-control" value="点击输入身份证号"
+						onfocus="if(value==&#39;点击输入身份证号&#39;) {value=&#39;&#39;}"
+						onblur="if (value==&#39;&#39;) {value=&#39;点击输入身份证号&#39;}"
+						data-role="none">
+				</div>
+				<div class="tip">请输入身份证号</div>
+			</div>
+			<div class="register-item">
+				<div class="inputs ">
+					<label for="phone"><img src="img/dec.png"></label> <input
+						type="text" class="form-control" value="点击选择快递公司"
+						onfocus="if(value==&#39;点击选择快递公司&#39;) {value=&#39;&#39;}"
+						onblur="if (value==&#39;&#39;) {value=&#39;点击选择快递公司&#39;}"
+						data-role="none">
+				</div>
+				<div class="tip">请选择快递公司</div>
+			</div>
+			<div class="register-item ">
+				<div class="inputs verifycode-inputs">
+					<label for="phone_vcode"><img src="img/addr.png"></label> <input
+						type="text" readonly="true" class="form-control location"
+						value="定位" onfocus="if(value==&#39;定位&#39;) {value=&#39;&#39;}"
+						onblur="if (value==&#39;&#39;) {value=&#39;定位&#39;}"
+						data-role="none"> <span id="getcode"><a
+						href="javascript:void(0);"
+						onclick="get_phone_code();return false;" class="getcode sureLoc">
+							定 位 </a></span>
+				</div>
+				<div class="tip">定位</div>
+			</div>
+			<div class="register-item">
+				<div class="inputs ">
+					<label for="phone"><img src="img/addr.png"></label> <input
+						type="text" class="form-control" value="请选择所在地区"
+						onfocus="if(value==&#39;请选择所在地区&#39;) {value=&#39;&#39;}"
+						onblur="if (value==&#39;&#39;) {value=&#39;请选择所在地区&#39;}"
+						data-role="none">
+				</div>
+				<div class="tip">请选择所在地区</div>
+			</div>
+			<div class="register-item">
+				<div class="inputs ">
+					<label for="phone"><img src="img/box.png"></label> <input
+						type="text" class="form-control" value="点击输入详细箱柜地址"
+						onfocus="if(value==&#39;点击输入详细箱柜地址&#39;) {value=&#39;&#39;}"
+						onblur="if (value==&#39;&#39;) {value=&#39;点击输入详细箱柜地址&#39;}"
+						data-role="none">
+				</div>
+				<div class="tip">请输入详细箱柜地址</div>
+			</div>
+
+			<div class="register-item ">
+				<div class="inputs verifycode-inputs">
+					<label for="phone_vcode"><img src="img/lock.png"></label> <input
+						type="text" class="form-control" value="点击输入验证码"
+						onfocus="if(value==&#39;点击输入验证码&#39;) {value=&#39;&#39;}"
+						onblur="if (value==&#39;&#39;) {value=&#39;点击输入验证码&#39;}"
+						data-role="none"> <span id="time_show"
+						style="display: none; position: absolute; right: 10px;"><i
+						class="time" id="seconds_show">60</i>秒后重新获取</span> <span id="getcode"><a
+						href="javascript:void(0);"
+						onclick="get_phone_code();return false;" class="getcode">获取验证码</a></span>
+
+				</div>
+				<div class="tip">请输验证码</div>
+			</div>
+		</section>
+		<!-- 注册按键 -->
+		<section class="register-btn">
+			<button type="button" id="submit" onClick="return wapChkRegister();">提
+				交</button>
+		</section>
+	</form>
+	<script type="text/javascript">
+	AMap.plugin('AMap.Geolocation', function() {
+        geolocation = new AMap.Geolocation({
+            enableHighAccuracy: true,//是否使用高精度定位，默认:true
+            timeout: 10000,          //超过10秒后停止定位，默认：无穷大
+            buttonOffset: new AMap.Pixel(10, 20),//定位按钮与设置的停靠位置的偏移量，默认：Pixel(10, 20)
+            zoomToAccuracy: true,      //定位成功后调整地图视野范围使定位位置及精度范围视野内可见，默认：false
+            buttonPosition:'RB'
+        });		        
+        geolocation.getCurrentPosition();
+        AMap.event.addListener(geolocation, 'complete', onComplete);//返回定位信息
+        AMap.event.addListener(geolocation, 'error', onError);      //返回定位出错信息
+    });
+	
+    //解析定位结果
+    function onComplete(data) {       
+        //str.push('经度：' + data.position.getLng());
+       // str.push('纬度：' + data.position.getLat());
+		lnglatXY = [data.position.getLng(), data.position.getLat()]; //已知点坐标
+		var geocoder = new AMap.Geocoder({
+			radius: 1000,
+			extensions: "all"
+		});		
+		geocoder.getAddress(lnglatXY, function(status, result) {			
+			if (status === 'complete' && result.info === 'OK') {
+				var address = result.regeocode.formattedAddress; //返回地址描述
+				$(".location").val(address);
+				//alert(address);
+			}
+		});     
+    }
+    //解析定位错误信息
+    function onError(data) {
+        alert('定位失败');
+    }	
+   jQuery('#password').focus(function(){
+				document.getElementById('password_tip_div').style.visibility = 'visible';//显示
+				jQuery("#password_tip_div").html('请输入密码,密码为数字、字母(区分大小写)、标点组合,长度6-20位');
+				
+   });
+</script>
+</body>
+</html>

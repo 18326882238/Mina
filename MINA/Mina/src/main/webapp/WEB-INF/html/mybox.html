@@ -1,0 +1,308 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>我的柜子</title>
+
+<style type="text/css">
+* {
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+}
+
+a, img {
+	border: 0;
+	text-decoration: none;
+}
+
+body {
+	font: 12px/180% Arial, Helvetica, sans-serif, "新宋体";
+	background-image: url(img/bg.jpg);
+	background-size: cover;
+}
+
+.pic {
+	width: 100%;
+	height: 100%;
+}
+
+.pic ul li {
+	list-style: none;
+	width: 100%;
+	height: 150px;
+	float: left;
+}
+
+.pic .l1 {
+	height: 1260px;
+}
+
+.txt {
+	width: 100%;
+	height: 150px;
+	background: #000;
+	filter: alpha(opacity = 50);
+	background: rgba(0, 0, 0, .5);
+}
+
+.txt p {
+	color: #fff;
+	font-family: "微软雅黑";
+	position: relative;
+	line-height: 150px;
+	margin-left: 40%;
+	font-size: 80px;
+}
+
+.icon {
+	margin-top: 40px;
+	margin-left: 30%;
+	position: absolute;
+}
+
+.addr {
+	margin-top: 4%;
+}
+
+.tip {
+	margin-left: 5%;
+	font-size: 40px;
+	font-weight: BOLD;
+}
+
+.ui-select {
+	font-size: 50px;
+	margin-top: 3%;
+	margin-left: 5%;
+	width: 90%;
+	height: 110px;
+}
+
+.disr {
+	margin-left: 5%;
+	width: 90%;
+	font-size: 42px;
+	margin-top: 2%;
+	resize: none;
+	height: 250px;
+}
+
+.pay, .sub {
+	background: #00cc33;
+	height: 150px;
+	width: 80%;
+	display: block;
+	border-radius: 15px;
+	text-align: center;
+	line-height: 150px;
+	font-size: 80px;
+	font-weight: BOLD;
+	margin-top: 4%;
+	margin-left: 10%;
+	box-shadow: 0 2px 2px green; /*底边阴影*/
+}
+
+.boxSize {
+	width: 60%;
+	margin-left: 20%;
+	height: 18%;
+	line-height: 80px;
+	background: rgba(0, 0, 0, 0.2);
+	margin-top: 2%;
+	text-align: center;
+	font-size: 70px;
+	font-weight: BOLD;
+	border-radius: 5px;
+}
+
+.selected {
+	background: #00BFFF;
+	border: 1px solid red;
+}
+
+.dis {
+	float: rigth;
+}
+
+.oper_1 h1 {
+	font-size: 90px;
+	text-align: center;
+	margin-top: 50%;
+}
+
+.oper_2, .oper_3 {
+	display: none;
+}
+
+.pname {
+	height: 60px;
+	width: 100%;
+	line-height: 80px;
+	font-size: 60px;
+	margin-top: 5%;
+}
+
+.pname input {
+	width: 70%;
+	height: 100px;
+	font-size: 70px;
+	text-align: center;
+}
+
+.input_1 {
+	text-align: center;
+}
+
+.bad {
+	text-align: center;
+	margin-top: 5%;
+}
+
+.bad p {
+	height: 80px;
+	line-height: 80px;
+	font-size: 40px;
+	font-weight: bold;
+}
+
+.bad button {
+	font-size: 50px;
+	background: #fff;
+	height: 80px;
+	margin-left: 10px;
+	border-radius: 15px;
+}
+
+.bad_disr {
+	text-align: center;
+	font-size: 42px;
+	margin-top: 3%;
+	font-weight: bold;
+}
+
+.disr_1 {
+	width: 90%;
+	font-size: 40px;
+	margin-top: 20px;
+	resize: none;
+	text-align: center;
+	height: 200px;
+}
+</style>
+<script type="text/javascript" src="js/jquery-3.1.0.min.js"></script>
+</head>
+<body>
+
+	<div class="pic">
+		<ul>
+			<li class="l1">
+				<div class="blank">
+					<div class="txt">
+						<img src="img/cabinet.png" class="icon" />
+						<p class="p1">我 的 柜 子</p>
+					</div>
+					<div class="oper oper_1">
+						<h1>
+							您还没有专柜!
+							<h1>
+					</div>
+				</div>
+			</li>
+			<li class="l2">
+				<div class="blank">
+					<div class="txt">
+						<img src="img/deposit.png" class="icon" />
+						<p class="p1">物 件 寄 存</p>
+					</div>
+					<div class="oper oper_2">
+						<div class="addr p1">
+							<p class="tip">附 近 的 箱 柜 :</p>
+							<select name="drop1" class="ui-select">
+								<option value="">凤城花苑&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+									200m</option>
+								<option value="">龙门广场&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+									1.7km</option>
+							</select>
+						</div>
+						<div class="addr p2">
+							<p class="tip">格 口 类 型 :</p>
+							<p class="boxSize">小 0.2元</p>
+							<p class="boxSize">中 0.4元</p>
+							<p class="boxSize">大 0.5元</p>
+						</div>
+						<div class="addr p3">
+							<p class="tip">物 件 描 述 :</p>
+							<textarea name="disr" cols="20" rows="5" class="disr"></textarea>
+						</div>
+						<div>
+							<a class="pay">立 即 支 付</a>
+						</div>
+					</div>
+				</div>
+			</li>
+			<li class="l3">
+				<div class="blank">
+					<div class="txt">
+						<img src="img/repair.png" class="icon" />
+						<p class="p1">故 障 报 修</p>
+					</div>
+					<div class="oper oper_3">
+						<div class="input_1">
+							<p class="pname">
+								小区名: <input type="text" placeholder="点击输入小区名称" />
+							</p>
+							<p class="pname">
+								手机号: <input type="text" placeholder="点击输入您的手机号" />
+							</p>
+							<p class="pname">
+								设备号: <input type="text" placeholder="点击输入设备编号" />
+							</p>
+						</div>
+						<div class="bad">
+							<p>请 选 择 故 障 类 型</p>
+							<button class="btn">黑 屏</button>
+							<button class="btn">卡 屏</button>
+							<button class="btn">断 电</button>
+							<button class="btn">死 机</button>
+							<button class="btn">箱门故障</button>
+							<button class="btn">乱开箱门</button>
+							<button class="btn">扫码头故障</button>
+							<button class="btn">网络断开连接</button>
+							<button class="btn">屏幕触摸失灵</button>
+						</div>
+						<div class="bad_disr">
+							<p>故 障 描 述</p>
+							<textarea name="disr" cols="20" rows="5" class="disr_1"></textarea>
+						</div>
+						<a class="sub">提 交</a>
+
+					</div>
+				</div>
+			</li>
+		</ul>
+	</div>
+
+	<script type="text/javascript">
+	$(function(){
+		
+	});
+	
+	$(".pic ul li").click(function(){
+		$(this).stop(true).animate({height:"1260px"},400).siblings().stop(true).animate({height:"150px"},400);
+		$(this).siblings().children("div").children("div:last-child").hide();
+		//$(this).siblings().children("a").children("last-child").hide();
+		$(this).children("div").children("div:last-child").show();
+	});	
+	$(".boxSize").click(function(){
+	$(this).siblings().removeClass("selected");
+		$(this).addClass("selected");
+		
+	});
+	$(".btn").click(function(){
+		$(this).css( "background-color","#00BFFF");
+	});
+</script>
+
+</body>
+</html>
